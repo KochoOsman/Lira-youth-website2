@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MarketFlow — Online Marketing App</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-dot"></div>MarketFlow
+        </div>
+        <div class="sidebar-section">Overview</div>
+        <div class="nav-item active" onclick="showPage('dashboard',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+            </svg>
+            Dashboard
+        </div>
+        <div class="nav-item" onclick="showPage('analytics',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="20" x2="18" y2="10" />
+                <line x1="12" y1="20" x2="12" y2="4" />
+                <line x1="6" y1="20" x2="6" y2="14" />
+            </svg>
+            Analytics
+        </div>
+        <div class="sidebar-section">Content</div>
+        <div class="nav-item" onclick="showPage('posts',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+            </svg>
+            Posts &amp; Schedule
+        </div>
+        <div class="nav-item" onclick="showPage('emails',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+            </svg>
+            Email Campaigns
+            <div class="notif-dot"></div>
+        </div>
+        <div class="nav-item" onclick="showPage('campaigns',this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+            Ad Campaigns
+        </div>
+        <div class="sidebar-section">Settings</div>
+        <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3" />
+                <path
+                    d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M4.93 19.07l1.41-1.41M18.66 18.66l1.41-1.41M2 12h2M20 12h2" />
+            </svg>
+            Integrations
+        </div>
+        <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M20 21a8 8 0 10-16 0" />
+            </svg>
+            Team
+        </div>
+        <div class="sidebar-bottom">
+            <div class="user-chip">
+                <div class="user-avatar">AG</div>
+                <div>
+                    <div class="user-name">Agency Admin</div>
+                    <div class="user-role">Pro Plan</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div class="topbar-title" id="page-title">Dashboard</div>
+            <div class="search-bar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input type="text" placeholder="Search..." />
+            </div>
+            <button class="btn btn-ghost" onclick="openModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                New Post
+            </button>
+            <button class="btn btn-accent" onclick="showToast('Campaign launched!')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+                Launch Campaign
+            </button>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div class="page active" id="page-dashboard">
+            <div class="stats-grid">
+                <div class="stat-card c1">
+                    <div class="stat-label">Total Reach</div>
+                    <div class="stat-num" style="color:var(--accent)">248K</div>
+                    <div class="stat-change up">↑ 14.2% this week</div>
+                </div>
+                <div class="stat-card c2">
+                    <div class="stat-label">Engagement</div>
+                    <div class="stat-num" style="color:var(--accent2)">18.7%</div>
+                    <div class="stat-change up">↑ 3.1% vs last week</div>
+                </div>
+                <div class="stat-card c3">
+                    <div class="stat-label">Conversions</div>
+                    <div class="stat-num" style="color:var(--accent3)">1,432</div>
+                    <div class="stat-change down">↓ 2.3% this week</div>
+                </div>
+                <div class="stat-card c4">
+                    <div class="stat-label">Revenue</div>
+                    <div class="stat-num" style="color:var(--accent4)">$12.4K</div>
+                    <div class="stat-change up">↑ 8.9% this month</div>
+                </div>
+            </div>
+
+            <div class="grid2">
+                <div class="card">
+                    <div class="card-title">Weekly Performance <span>Last 7 days</span></div>
+                    <div class="chart-bars">
+                        <div class="bar-col">
+                            <div class="bar" style="height:55%;background:var(--accent2);opacity:.7;"></div>
+                            <div class="bar-label">Mon</div>
+                        </div>
+                        <div class="bar-col">
+                            <div class="bar" style="height:70%;background:var(--accent2);opacity:.8;"></div>
+                            <div class="bar-label">Tue</div>
+                        </div>
+                        <div class="bar-col">
+                            <div class="bar" style="height:45%;background:var(--accent2);opacity:.7;"></div>
+                            <div class="bar-label">Wed</div>
+                        </div>
+                        <div class="bar-col">
+                            <div class="bar" style="height:90%;background:var(--accent);"></div>
+                            <div class="bar-label">Thu</div>
+                        </div>
+                        <div class="bar-col">
+                            <div class="bar" style="height:75%;background:var(--accent2);opacity:.8;"></div>
+                            <div class="bar-label">Fri</div>
+                        </div>
+                        <div class="bar-col">
+                            <div class="bar" style="height:60%;background:var(--accent2);opacity:.7;"></div>
+                            <div class="bar-label">Sat</div>
+                        </div>
+                        <div class="bar-col">
+                            <div class="bar" style="height:50%;background:var(--accent2);opacity:.6;"></div>
+                            <div class="bar-label">Sun</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Platform Breakdown</div>
+                    <div class="platform-list">
+                        <div class="platform-item">
+                            <div class="platform-icon" style="background:rgba(24,119,242,0.15);">f</div>
+                            <div class="platform-name" style="font-size:13px;">Facebook</div>
+                            <div class="platform-bar-wrap">
+                                <div class="platform-bar" style="width:72%;background:var(--accent2);"></div>
+                            </div>
+                            <div class="platform-pct">72%</div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-icon" style="background:rgba(225,48,108,0.15);">📷</div>
+                            <div class="platform-name" style="font-size:13px;">Instagram</div>
+                            <div class="platform-bar-wrap">
+                                <div class="platform-bar" style="width:58%;background:var(--accent3);"></div>
+                            </div>
+                            <div class="platform-pct">58%</div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-icon" style="background:rgba(29,161,242,0.15);">𝕏</div>
+                            <div class="platform-name" style="font-size:13px;">Twitter/X</div>
+                            <div class="platform-bar-wrap">
+                                <div class="platform-bar" style="width:34%;background:var(--accent);"></div>
+                            </div>
+                            <div class="platform-pct">34%</div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-icon" style="background:rgba(37,211,102,0.15);">💬</div>
+                            <div class="platform-name" style="font-size:13px;">WhatsApp</div>
+                            <div class="platform-bar-wrap">
+                                <div class="platform-bar" style="width:28%;background:var(--accent4);"></div>
+                            </div>
+                            <div class="platform-pct">28%</div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-icon" style="background:rgba(0,119,255,0.15);">✉</div>
+                            <div class="platform-name" style="font-size:13px;">Email</div>
+                            <div class="platform-bar-wrap">
+                                <div class="platform-bar" style="width:41%;background:#a78bfa;"></div>
+                            </div>
+                            <div class="platform-pct">41%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Recent Activity <span>Live feed</span></div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-dot" style="background:var(--accent);"></div>
+                        <div class="activity-text">Facebook post <strong>"Summer Sale is here!"</strong> reached 4,200
+                            users — 142 likes, 38 shares</div>
+                        <div class="activity-time">2m ago</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot" style="background:var(--accent2);"></div>
+                        <div class="activity-text">Email campaign <strong>"Weekly Newsletter #24"</strong> sent to 3,800
+                            subscribers — 42% open rate</div>
+                        <div class="activity-time">1h ago</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot" style="background:var(--accent4);"></div>
+                        <div class="activity-text">Instagram story scheduled for <strong>tomorrow 9:00 AM</strong> —
+                            Product Launch teaser</div>
+                        <div class="activity-time">3h ago</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot" style="background:var(--accent3);"></div>
+                        <div class="activity-text">Ad campaign <strong>"Brand Awareness Q3"</strong> budget 80% spent —
+                            12,400 impressions delivered</div>
+                        <div class="activity-time">5h ago</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot" style="background:#a78bfa;"></div>
+                        <div class="activity-text">WhatsApp broadcast sent to <strong>890 contacts</strong> — 94%
+                            delivered, 61% read</div>
+                        <div class="activity-time">Yesterday</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POSTS PAGE -->
+        <div class="page" id="page-posts">
+            <div class="post-toolbar">
+                <div class="platform-tabs">
+                    <button class="ptab active">All</button>
+                    <button class="ptab">Facebook</button>
+                    <button class="ptab">Instagram</button>
+                    <button class="ptab">Twitter/X</button>
+                    <button class="ptab">WhatsApp</button>
+                </div>
+                <div style="margin-left:auto;display:flex;gap:8px;">
+                    <button class="btn btn-ghost">Schedule</button>
+                    <button class="btn btn-accent" onclick="openModal()">+ New Post</button>
+                </div>
+            </div>
+
+            <div class="compose-box">
+                <div class="compose-header">
+                    <div class="compose-avatar">AG</div>
+                    <div>
+                        <div class="compose-name">Agency Admin</div>
+                        <div class="compose-platform">Posting to: All Platforms</div>
+                    </div>
+                </div>
+                <textarea class="compose-textarea"
+                    placeholder="What would you like to share today? Use AI to help craft your message..."
+                    oninput="updateCount(this)" maxlength="280"></textarea>
+                <div class="compose-footer">
+                    <div class="compose-actions">
+                        <div class="icon-btn" title="Image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" />
+                                <circle cx="8.5" cy="8.5" r="1.5" />
+                                <polyline points="21 15 16 10 5 21" />
+                            </svg></div>
+                        <div class="icon-btn" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                                <line x1="9" y1="9" x2="9.01" y2="9" />
+                                <line x1="15" y1="9" x2="15.01" y2="9" />
+                            </svg></div>
+                        <div class="icon-btn" title="Link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
+                                <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
+                            </svg></div>
+                        <div class="icon-btn" onclick="aiSuggest()" title="AI Suggest"
+                            style="background:rgba(0,229,176,0.1);border-color:rgba(0,229,176,0.3);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <span class="char-count" id="char-count">0/280</span>
+                        <button class="btn btn-ghost">Save Draft</button>
+                        <button class="btn btn-accent"
+                            onclick="showToast('Post scheduled successfully!')">Schedule</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="posts-grid">
+                <div class="post-card">
+                    <div class="post-card-header">
+                        <div class="post-platform-badge" style="background:rgba(24,119,242,0.15);">f</div>
+                        <div class="post-card-platform">Facebook</div>
+                        <div class="post-card-time">Today, 9:00 AM</div>
+                    </div>
+                    <div class="post-card-body">🚀 Big news! Our new service line launches this Friday. Stay tuned for
+                        an exclusive early-bird offer for our loyal community...</div>
+                    <div><span class="post-status status-scheduled">⏱ Scheduled</span></div>
+                    <div class="post-card-stats">
+                        <div class="post-stat">❤ —</div>
+                        <div class="post-stat">↗ —</div>
+                        <div class="post-stat">👁 Est. 3.2K</div>
+                    </div>
+                </div>
+                <div class="post-card">
+                    <div class="post-card-header">
+                        <div class="post-platform-badge" style="background:rgba(225,48,108,0.15);">📷</div>
+                        <div class="post-card-platform">Instagram</div>
+                        <div class="post-card-time">Yesterday, 6:00 PM</div>
+                    </div>
+                    <div class="post-card-body">Behind the scenes of our latest campaign shoot 🎬✨ Swipe to see how we
+                        brought this vision to life. #Marketing #Creative</div>
+                    <div><span class="post-status status-published">✓ Published</span></div>
+                    <div class="post-card-stats">
+                        <div class="post-stat">❤ 847</div>
+                        <div class="post-stat">↗ 124</div>
+                        <div class="post-stat">👁 6.1K</div>
+                    </div>
+                </div>
+                <div class="post-card">
+                    <div class="post-card-header">
+                        <div class="post-platform-badge" style="background:rgba(29,161,242,0.15);">𝕏</div>
+                        <div class="post-card-platform">Twitter / X</div>
+                        <div class="post-card-time">2 days ago</div>
+                    </div>
+                    <div class="post-card-body">Thread: 5 marketing mistakes costing you clients in 2025 🧵
+                        #DigitalMarketing #GrowthHacks</div>
+                    <div><span class="post-status status-published">✓ Published</span></div>
+                    <div class="post-card-stats">
+                        <div class="post-stat">❤ 312</div>
+                        <div class="post-stat">↗ 89</div>
+                        <div class="post-stat">👁 11.8K</div>
+                    </div>
+                </div>
+                <div class="post-card">
+                    <div class="post-card-header">
+                        <div class="post-platform-badge" style="background:rgba(37,211,102,0.15);">💬</div>
+                        <div class="post-card-platform">WhatsApp Broadcast</div>
+                        <div class="post-card-time">Tomorrow, 10:00 AM</div>
+                    </div>
+                    <div class="post-card-body">Hey [Name]! Don't miss our exclusive weekend deal — 30% off all
+                        services. Reply YES to grab your spot before it's gone! 🔥</div>
+                    <div><span class="post-status status-draft">✎ Draft</span></div>
+                    <div class="post-card-stats">
+                        <div class="post-stat">👥 890 contacts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANALYTICS PAGE -->
+        <div class="page" id="page-analytics">
+            <div class="analytics-grid">
+                <div class="stat-card c1">
+                    <div class="stat-label">Total Impressions</div>
+                    <div class="stat-num" style="color:var(--accent)">1.24M</div>
+                    <div class="stat-change up">↑ 22% this month</div>
+                </div>
+                <div class="stat-card c2">
+                    <div class="stat-label">Click-Through Rate</div>
+                    <div class="stat-num" style="color:var(--accent2)">4.8%</div>
+                    <div class="stat-change up">↑ 0.6% vs avg</div>
+                </div>
+                <div class="stat-card c4">
+                    <div class="stat-label">Cost Per Click</div>
+                    <div class="stat-num" style="color:var(--accent4)">$0.42</div>
+                    <div class="stat-change up">↓ 12% optimized</div>
+                </div>
+            </div>
+            <div class="big-chart">
+                <div class="card-title">Monthly Reach Trend <span>Jan – Jul 2025</span></div>
+                <div class="big-bars">
+                    <div class="big-bar-col">
+                        <div class="big-bar" style="height:40%;background:var(--accent2);opacity:.6;"></div>
+                        <div class="big-bar-label">Jan</div>
+                    </div>
+                    <div class="big-bar-col">
+                        <div class="big-bar" style="height:55%;background:var(--accent2);opacity:.7;"></div>
+                        <div class="big-bar-label">Feb</div>
+                    </div>
+                    <div class="big-bar-col">
+                        <div class="big-bar" style="height:48%;background:var(--accent2);opacity:.65;"></div>
+                        <div class="big-bar-label">Mar</div>
+                    </div>
+                    <div class="big-bar-col">
+                        <div class="big-bar" style="height:70%;background:var(--accent2);opacity:.8;"></div>
+                        <div class="big-bar-label">Apr</div>
+                    </div>
+                    <div class="big-bar-col">
+                        <div class="big-bar" style="height:65%;background:var(--accent2);opacity:.75;"></div>
+                        <div class="big-bar-label">May</div>
+                    </div>
+                    <div class="big-bar-col">
+                        <div class="big-bar" style="height:85%;background:var(--accent2);opacity:.9;"></div>
+                        <div class="big-bar-label">Jun</div>
+                    </div>
+                    <div class="big-bar-col">
+                        <div class="big-bar" style="height:100%;background:var(--accent);"></div>
+                        <div class="big-bar-label">Jul</div>
+                    </div>
+                </div>
+            </div>
+            <div class="analytics-bottom">
+                <div class="card">
+                    <div class="card-title">Top Performing Posts</div>
+                    <div class="top-posts-list">
+                        <div class="top-post-item">
+                            <div class="tp-rank">#1</div>
+                            <div class="tp-info">
+                                <div class="tp-text">Summer Sale announcement thread</div>
+                                <div class="tp-platform">Twitter/X</div>
+                            </div>
+                            <div class="tp-reach">42K reach</div>
+                        </div>
+                        <div class="top-post-item">
+                            <div class="tp-rank">#2</div>
+                            <div class="tp-info">
+                                <div class="tp-text">Behind the scenes campaign shoot</div>
+                                <div class="tp-platform">Instagram</div>
+                            </div>
+                            <div class="tp-reach">28K reach</div>
+                        </div>
+                        <div class="top-post-item">
+                            <div class="tp-rank">#3</div>
+                            <div class="tp-info">
+                                <div class="tp-text">Client success story — Acme Corp</div>
+                                <div class="tp-platform">Facebook</div>
+                            </div>
+                            <div class="tp-reach">19K reach</div>
+                        </div>
+                        <div class="top-post-item">
+                            <div class="tp-rank">#4</div>
+                            <div class="tp-info">
+                                <div class="tp-text">Weekly newsletter — Growth tips</div>
+                                <div class="tp-platform">Email</div>
+                            </div>
+                            <div class="tp-reach">14K opens</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Audience Demographics</div>
+                    <div class="platform-list">
+                        <div class="platform-item">
+                            <div class="platform-name" style="font-size:12px;color:var(--muted);">18–24</div>
+                            <div class="platform-bar-wrap">
+                                <div class="platform-bar" style="width:22%;background:var(--accent);"></div>
+                            </div>
+                            <div class="platform-pct">22%</div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-name" style="font-size:12px;color:var(--muted);">25–34</div>
+                            <div class="platform-bar-wrap">
+                                <div class="platform-bar" style="width:38%;background:var(--accent2);"></div>
+                            </div>
+                            <div class="platform-pct">38%</div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-name" style="font-size:12px;color:var(--muted);">35–44</div>
+                            <div class="platform-bar-wrap">
+                                <div class="platform-bar" style="width:26%;background:var(--accent4);"></div>
+                            </div>
+                            <div class="platform-pct">26%</div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-name" style="font-size:12px;color:var(--muted);">45–54</div>
+                            <div class="platform-bar-wrap">
+                                <div class="platform-bar" style="width:10%;background:var(--accent3);"></div>
+                            </div>
+                            <div class="platform-pct">10%</div>
+                        </div>
+                        <div class="platform-item">
+                            <div class="platform-name" style="font-size:12px;color:var(--muted);">55+</div>
+                            <div class="platform-bar-wrap">
+                                <div class="platform-bar" style="width:4%;background:var(--muted);"></div>
+                            </div>
+                            <div class="platform-pct">4%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAMPAIGNS PAGE -->
+        <div class="page" id="page-campaigns">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+                <div>
+                    <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;">Ad Campaigns</div>
+                    <div style="font-size:13px;color:var(--muted);margin-top:2px;">4 active · 2 paused · 1 ended</div>
+                </div>
+                <button class="btn btn-accent" onclick="showToast('New campaign created!')">+ New Campaign</button>
+            </div>
+            <div class="campaigns-list">
+                <div class="campaign-row">
+                    <div class="campaign-icon" style="background:rgba(0,229,176,0.1);"><svg width="20" height="20"
+                            viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                        </svg></div>
+                    <div class="campaign-info">
+                        <div class="campaign-name">Brand Awareness Q3</div>
+                        <div class="campaign-meta">Facebook · Instagram · Started Jul 1</div>
+                    </div>
+                    <div class="campaign-progress-wrap">
+                        <div class="campaign-progress-label"><span>Budget used</span><span>80%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width:80%;background:var(--accent);"></div>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <div class="cstat"><strong>124K</strong>Impressions</div>
+                        <div class="cstat"><strong>3.2%</strong>CTR</div>
+                        <div class="cstat"><strong>$1,600</strong>Spent</div>
+                    </div>
+                    <span class="campaign-badge badge-active">Active</span>
+                </div>
+                <div class="campaign-row">
+                    <div class="campaign-icon" style="background:rgba(0,119,255,0.1);"><svg width="20" height="20"
+                            viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg></div>
+                    <div class="campaign-info">
+                        <div class="campaign-name">Email Re-engagement Drive</div>
+                        <div class="campaign-meta">Email · 3,800 subscribers · Started Jun 20</div>
+                    </div>
+                    <div class="campaign-progress-wrap">
+                        <div class="campaign-progress-label"><span>Completed</span><span>100%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width:100%;background:var(--accent2);"></div>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <div class="cstat"><strong>1,596</strong>Opened</div>
+                        <div class="cstat"><strong>42%</strong>Open rate</div>
+                        <div class="cstat"><strong>$240</strong>Spent</div>
+                    </div>
+                    <span class="campaign-badge badge-active">Active</span>
+                </div>
+                <div class="campaign-row">
+                    <div class="campaign-icon" style="background:rgba(255,184,0,0.1);"><svg width="20" height="20"
+                            viewBox="0 0 24 24" fill="none" stroke="var(--accent4)" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg></div>
+                    <div class="campaign-info">
+                        <div class="campaign-name">Product Launch — ServiceX</div>
+                        <div class="campaign-meta">Twitter/X · WhatsApp · Started Jul 5</div>
+                    </div>
+                    <div class="campaign-progress-wrap">
+                        <div class="campaign-progress-label"><span>Budget used</span><span>35%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width:35%;background:var(--accent4);"></div>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <div class="cstat"><strong>28K</strong>Impressions</div>
+                        <div class="cstat"><strong>5.1%</strong>CTR</div>
+                        <div class="cstat"><strong>$350</strong>Spent</div>
+                    </div>
+                    <span class="campaign-badge badge-paused">Paused</span>
+                </div>
+                <div class="campaign-row" style="opacity:.6;">
+                    <div class="campaign-icon" style="background:rgba(255,255,255,0.05);"><svg width="20" height="20"
+                            viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                        </svg></div>
+                    <div class="campaign-info">
+                        <div class="campaign-name">Q2 Promo Campaign</div>
+                        <div class="campaign-meta">All platforms · Ended Jun 30</div>
+                    </div>
+                    <div class="campaign-progress-wrap">
+                        <div class="campaign-progress-label"><span>Completed</span><span>100%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width:100%;background:var(--muted);"></div>
+                        </div>
+                    </div>
+                    <div class="campaign-stats">
+                        <div class="cstat"><strong>310K</strong>Impressions</div>
+                        <div class="cstat"><strong>4.6%</strong>CTR</div>
+                        <div class="cstat"><strong>$4,200</strong>Spent</div>
+                    </div>
+                    <span class="campaign-badge badge-ended">Ended</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- EMAILS PAGE -->
+        <div class="page" id="page-emails">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+                <div>
+                    <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;">Email Campaigns</div>
+                    <div style="font-size:13px;color:var(--muted);margin-top:2px;">3,800 subscribers · 42% avg open rate
+                    </div>
+                </div>
+                <button class="btn btn-accent" onclick="showToast('New email campaign created!')">+ New Email</button>
+            </div>
+            <div class="email-list">
+                <div class="email-row">
+                    <div class="email-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg></div>
+                    <div class="email-info">
+                        <div class="email-subject">🔥 Weekly Newsletter #24 — Growth Hacks That Work</div>
+                        <div class="email-meta">Sent Jul 10 · 3,800 recipients</div>
+                    </div>
+                    <div class="email-stats">
+                        <div class="estat"><strong style="color:var(--accent)">42%</strong>Open Rate</div>
+                        <div class="estat"><strong>8.3%</strong>Click Rate</div>
+                        <div class="estat"><strong>12</strong>Unsubscribed</div>
+                    </div>
+                    <div class="email-actions">
+                        <button class="btn btn-ghost" style="font-size:12px;">View Report</button>
+                        <button class="btn btn-ghost" style="font-size:12px;">Resend</button>
+                    </div>
+                </div>
+                <div class="email-row">
+                    <div class="email-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg></div>
+                    <div class="email-info">
+                        <div class="email-subject">Exclusive Offer — 30% Off This Weekend Only</div>
+                        <div class="email-meta">Sent Jul 5 · 3,780 recipients</div>
+                    </div>
+                    <div class="email-stats">
+                        <div class="estat"><strong style="color:var(--accent)">38%</strong>Open Rate</div>
+                        <div class="estat"><strong>14.2%</strong>Click Rate</div>
+                        <div class="estat"><strong>8</strong>Unsubscribed</div>
+                    </div>
+                    <div class="email-actions">
+                        <button class="btn btn-ghost" style="font-size:12px;">View Report</button>
+                        <button class="btn btn-ghost" style="font-size:12px;">Resend</button>
+                    </div>
+                </div>
+                <div class="email-row">
+                    <div class="email-icon" style="background:rgba(255,184,0,0.1);"><svg viewBox="0 0 24 24" fill="none"
+                            stroke="var(--accent4)" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg></div>
+                    <div class="email-info">
+                        <div class="email-subject">📣 ServiceX Launch — Be the First to Know!</div>
+                        <div class="email-meta">Scheduled · Jul 15, 9:00 AM · 3,800 recipients</div>
+                    </div>
+                    <div class="email-stats">
+                        <div class="estat"><strong style="color:var(--accent4)">—</strong>Pending</div>
+                        <div class="estat"><strong>—</strong>Click Rate</div>
+                        <div class="estat"><strong>—</strong>Unsubscribed</div>
+                    </div>
+                    <div class="email-actions">
+                        <button class="btn btn-ghost" style="font-size:12px;">Edit</button>
+                        <button class="btn btn-accent" style="font-size:12px;" onclick="showToast('Email sent!')">Send
+                            Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <div class="modal-title">Create New Post</div>
+            <div class="form-group">
+                <label class="form-label">Platform</label>
+                <select class="form-select">
+                    <option>All Platforms</option>
+                    <option>Facebook</option>
+                    <option>Instagram</option>
+                    <option>Twitter / X</option>
+                    <option>WhatsApp</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Post Content</label>
+                <textarea class="form-textarea" placeholder="Write your post content here..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Schedule Date & Time</label>
+                <input class="form-input" type="datetime-local" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <select class="form-select">
+                    <option>Schedule</option>
+                    <option>Publish Now</option>
+                    <option>Save as Draft</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-accent" onclick="savePost()">Save Post</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <div class="toast-dot"></div>
+        <span id="toast-msg">Action completed!</span>
+    </div>
+
+    <script>
+        function showPage(id, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('page-' + id).classList.add('active');
+            el.classList.add('active');
+            const titles = { dashboard: 'Dashboard', posts: 'Posts & Schedule', analytics: 'Analytics', campaigns: 'Ad Campaigns', emails: 'Email Campaigns' };
+            document.getElementById('page-title').textContent = titles[id] || id;
+        }
+
+        function openModal() {
+            document.getElementById('modal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('open');
+        }
+
+        function savePost() {
+            closeModal();
+            showToast('Post saved successfully!');
+        }
+
+        document.getElementById('modal').addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
+        });
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function updateCount(el) {
+            document.getElementById('char-count').textContent = el.value.length + '/280';
+        }
+
+        function aiSuggest() {
+            const suggestions = [
+                "🚀 Exciting news! We're launching something big this week. Stay tuned and be the first to know! #Innovation #ComingSoon",
+                "💡 Did you know? Businesses that post consistently see 3x more engagement. Let us help you grow! #MarketingTips",
+                "🎯 Your audience is out there waiting. Today is the perfect day to connect, inspire, and convert! #DigitalMarketing"
+            ];
+            const ta = document.querySelector('.compose-textarea');
+            ta.value = suggestions[Math.floor(Math.random() * suggestions.length)];
+            updateCount(ta);
+            showToast('AI suggestion applied!');
+        }
+
+        document.querySelectorAll('.ptab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
